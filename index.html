@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra vị trí</title>
+</head>
+<body>
+    <h1>Kiểm tra vị trí của bạn</h1>
+    <button onclick="checkLocation()">Kiểm tra vị trí</button>
+
+    <p id="result"></p>
+
+    <script>
+        // Tọa độ của vị trí trung tâm cho phép
+        const allowedLocation = { lat: 10.8307364, lon: 106.774891 }; // Ví dụ: Trường CĐ Công Thương TP. HCM
+        const maxDistance = 1.0; // Phạm vi cho phép (km)
+
+        // Hàm tính khoảng cách giữa 2 tọa độ (theo km)
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Bán kính Trái đất (km)
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = R * c; // Khoảng cách theo km
+            return distance;
+        }
+
+        // Hàm kiểm tra vị trí của người dùng
+        function checkLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const userLat = position.coords.latitude;
+                    const userLon = position.coords.longitude;
+
+                    const distance = calculateDistance(userLat, userLon, allowedLocation.lat, allowedLocation.lon);
+
+                    if (distance <= maxDistance) {
+                        document.getElementById('result').innerText = "Bạn đang ở trong phạm vi cho phép!";
+                    } else {
+                        document.getElementById('result').innerText = `Bạn không nằm trong phạm vi cho phép. Khoảng cách: ${distance.toFixed(2)} km`;
+                    }
+                }, function(error) {
+                    document.getElementById('result').innerText = "Không thể lấy vị trí của bạn. Vui lòng thử lại!";
+                });
+            } else {
+                document.getElementById('result').innerText = "Trình duyệt của bạn không hỗ trợ Geolocation.";
+            }
+        }
+    </script>
+</body>
+</html>
