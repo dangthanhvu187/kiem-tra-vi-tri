@@ -6,15 +6,22 @@
     <title>Kiểm tra vị trí</title>
 </head>
 <body>
-    <h1>Kiểm tra vị trí của bạn</h1>
-    <button onclick="checkLocation()">Kiểm tra vị trí</button>
+    <style>
+        div.a {
+	        text-align: center;
+        }
+    </style>
 
+    <div class="a">
+    <h1>Kiểm tra vị trí của bạn</h1>
+    <button onclick="checkLocation()">Điểm danh</button>
+    </div>
     <p id="result"></p>
 
     <script>
         // Tọa độ của vị trí trung tâm cho phép
         const allowedLocation = { lat: 10.830651631830856, lon: 106.77545051419781 }; // Ví dụ: Trường CĐ Công Thương TP. HCM
-        const maxDistance = 5.0; // Phạm vi cho phép (km)
+        const maxDistance = 2.0; // Phạm vi cho phép (km)
 
         // URL chuyển hướng nếu trong phạm vi
         const redirectURLInRange = "https://fit-hitu.edu.vn"; // URL chuyển hướng nếu trong phạm vi
