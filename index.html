@@ -14,11 +14,11 @@
     <script>
         // Tọa độ của vị trí trung tâm cho phép
         const allowedLocation = { lat: 10.830651631830856, lon: 106.77545051419781 }; // Ví dụ: Trường CĐ Công Thương TP. HCM
-        const maxDistance = 2.0; // Phạm vi cho phép (km)
-        
+        const maxDistance = 5.0; // Phạm vi cho phép (km)
+
         // URL chuyển hướng nếu trong phạm vi
         const redirectURLInRange = "https://fit-hitu.edu.vn"; // URL chuyển hướng nếu trong phạm vi
-        
+
         // Hàm tính khoảng cách giữa 2 tọa độ (theo km)
         function calculateDistance(lat1, lon1, lat2, lon2) {
             const R = 6371; // Bán kính Trái đất (km)
@@ -42,7 +42,8 @@
                     const distance = calculateDistance(userLat, userLon, allowedLocation.lat, allowedLocation.lon);
 
                     if (distance <= maxDistance) {
-                        document.getElementById('result').innerText = "Bạn đang ở trong phạm vi cho phép!";
+                        // Chuyển hướng đến URL trong phạm vi cho phép
+                        window.location.href = redirectURLInRange;
                     } else {
                         document.getElementById('result').innerText = `Bạn không nằm trong phạm vi cho phép. Khoảng cách: ${distance.toFixed(2)} km`;
                     }
